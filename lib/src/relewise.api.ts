@@ -1,16 +1,18 @@
 import axios from 'axios';
 import { RelewiseCompositionSettings } from './relewise.types';
 
-export const getRecommendations = async ({
+export const getProductRecommendations = async ({
   apiKey,
   datasetId,
   settings,
   dataKeys,
+  language,
 }: {
   apiKey: string;
   datasetId: string;
   settings: RelewiseCompositionSettings;
   dataKeys: string[];
+  language: string;
 }) => {
   const filters: any[] = [];
 
@@ -40,7 +42,7 @@ export const getRecommendations = async ({
       },
     },
     Language: {
-      Value: 'da-dk',
+      Value: language,
     },
     User: {
       Classifications: {},

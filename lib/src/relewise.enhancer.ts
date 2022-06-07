@@ -1,4 +1,4 @@
-import { getRecommendations } from "./relewise.api";
+import { getProductRecommendations } from "./relewise.api";
 import { RelewiseCompositionSettings } from "./relewise.types";
 import { ComponentParameter } from "@uniformdev/canvas";
 
@@ -6,6 +6,7 @@ interface RelewiseEnhancerConfig {
   apiKey: string;
   datasetId: string;
   dataKeys: string[]; // Extra product fields you wish returned thats stored in the Data field
+  language: string;
 }
 
 export interface EditorValue {
@@ -25,17 +26,19 @@ export const createRelewiseEnhancer = ({
   apiKey,
   datasetId,
   dataKeys,
+  language
 }: RelewiseEnhancerConfig) => {
   return {
     enhanceOne: async function RelewiseEnhancer({ parameter, parameterName, component, context }: any) {
       const { value: settings }: { value: RelewiseCompositionSettings } = parameter;
 
       if (parameterIsEntry(parameter)) {
-        const recommendations = await getRecommendations({
+        const recommendations = await getProductRecommendations({
           apiKey,
           datasetId,
           settings,
           dataKeys,
+          language
         });
 
         return recommendations;
