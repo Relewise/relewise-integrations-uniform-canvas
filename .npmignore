@@ -1,0 +1,12 @@
+tsconfig.json
+tslint.json
+.prettierrc
+tsconfig.tsbuildinfo
+rollup.config.js
+src
+index.ts
+!dist/*
+!dist/src
+!dist/src/*
+test
+test/*
