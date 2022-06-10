@@ -1,14 +1,14 @@
 {
   "name": "relewise-uniform-mesh-enhancer",
-  "version": "1.0.19",
+  "version": "1.0.28",
   "description": "relewise uniform mesh enhancer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc --build --clean && tsc"
   },
-  "author": "Rasmus Østergaard",
-  "license": "ISC",
+  "author": "Relewise",
+  "license": "MIT",
   "dependencies": {
     "@uniformdev/canvas": "^16.0.0",
     "axios": "^0.27.2"
