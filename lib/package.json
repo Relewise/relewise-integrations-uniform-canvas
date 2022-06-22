@@ -1,5 +1,5 @@
 {
-  "name": "relewise-uniform-mesh-enhancer",
+  "name": "uniform-mesh-enhancer",
   "version": "1.0.28",
   "description": "relewise uniform mesh enhancer",
   "main": "dist/index.js",
