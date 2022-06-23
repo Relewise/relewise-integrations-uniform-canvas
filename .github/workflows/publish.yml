@@ -1,12 +1,19 @@
 name: publish to NPM
 
-on:
-  release:
-    types: [published]
+on: [push]
+
+#
+#on:
+#
+#  release:
+#    types: [published]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./lib
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -14,6 +21,6 @@ jobs:
           node-version: 12
       - run: npm install
       - run: npm test
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+    #  - uses: JS-DevTools/npm-publish@v1
+    #    with:
+    #      token: ${{ secrets.NPM_TOKEN }}
