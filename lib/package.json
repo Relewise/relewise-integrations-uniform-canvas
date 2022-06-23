@@ -1,7 +1,10 @@
 {
   "name": "uniform-mesh-enhancer",
-  "version": "1.0.28",
-  "description": "relewise uniform mesh enhancer",
+  "version": "1.0.0-alpha.1",
+  "description": "Relewise uniform mesh enhancer",
+  "keywords": [
+    "relewise", "search-engine", "recommendations", "personalization", "search", "recommender" 
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
