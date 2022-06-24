@@ -1,6 +1,6 @@
 ## Relewise data enhancers for Uniform Canvas.
 
-Used on the [https://uniform.app](Uniform Platform).
+Used on the [Uniform Platform](https://uniform.app).
 
 ## Usage examples
 
