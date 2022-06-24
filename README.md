@@ -1,11 +1,11 @@
-# Relewise Uniform Enhancer [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![npm version](https://badge.fury.io/js/@relewise%2Funiform-enhancer.svg)](https://badge.fury.io/js/@relewise%2Funiform-enhancer) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Relewise/relewise-integrations-uniform-enhancer/pulls)
+# Relewise Uniform Enhancer [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![npm version](https://badge.fury.io/js/@relewise%2Funiform-canvas.svg)](https://badge.fury.io/js/@relewise%2uniform-canvas) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Relewise/relewise-integrations-uniform-enhancer/pulls)
 
 ## Installation 
 
 Install via NPM or you preferred package manager: 
 
 ```
-npm install @relewise/uniform-enhancer
+npm install @relewise/uniform-canvas
 ```
 
 ## Usage examples
