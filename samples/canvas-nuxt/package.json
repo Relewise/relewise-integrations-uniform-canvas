@@ -2,6 +2,10 @@
   "name": "canvas-demo",
   "version": "1.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Relewise/relewise-integrations-uniform-enhancer"
+  },
   "scripts": {
     "build": "run-s generate:intents build:nuxt",
     "build:nuxt": "nuxt generate",

@@ -1,9 +1,9 @@
 {
-  "name": "uniform-mesh-enhancer",
+  "name": "uniform-canvas",
   "version": "1.0.0-alpha.1",
-  "description": "Relewise uniform mesh enhancer",
+  "description": "Relewise data enhancers for Uniform Canvas",
   "keywords": [
-    "relewise", "search-engine", "recommendations", "personalization", "search", "recommender" 
+    "relewise", "search-engine", "recommendations", "personalization", "search", "recommender", "uniform"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
