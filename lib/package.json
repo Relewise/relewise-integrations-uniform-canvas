@@ -2,6 +2,11 @@
   "name": "@relewise/uniform-canvas",
   "version": "1.0.0-alpha.1",
   "description": "Relewise data enhancers for Uniform Canvas",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Relewise/relewise-integrations-uniform-enhancer",
+    "directory": "lib"
+  },
   "keywords": [
     "relewise", "search-engine", "recommendations", "personalization", "search", "recommender", "uniform"
   ],
