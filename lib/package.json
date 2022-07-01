@@ -1,5 +1,5 @@
 {
-  "name": "mza-uniform-canvas",
+  "name": "@relewise/uniform-canvas",
   "version": "1.0.0-alpha.2",
   "description": "Relewise data enhancers for Uniform Canvas",
   "repository": {
