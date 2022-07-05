@@ -17,9 +17,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+          always-auth: true
       - run: npm i
       - run: npm run build
-      - run: JS-DevTools/npm-publish@v1
+      - run: npm publish --access public --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           token: ${{ secrets.NPM_TOKEN }}
