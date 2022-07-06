@@ -1,4 +1,4 @@
-# Relewise Uniform Enhancer [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![npm version](https://badge.fury.io/js/@relewise%2Funiform-canvas.svg)](https://badge.fury.io/js/@relewise%2uniform-canvas) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Relewise/relewise-integrations-uniform-enhancer/pulls)
+# Relewise Uniform Canvas [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![npm version](https://badge.fury.io/js/@relewise%2Funiform-canvas.svg)](https://badge.fury.io/js/@relewise%2uniform-canvas) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Relewise/relewise-integrations-uniform-canvas/pulls)
 
 ## Installation 
 
@@ -30,8 +30,8 @@ await enhance({
 Pull requests are always welcome.  
 Please fork this repository and make a PR when you are ready with your contribution.  
 
-Otherwise you are welcome to open an Issue in our [issue tracker](https://github.com/Relewise/relewise-integrations-uniform-enhancer/issues).
+Otherwise you are welcome to open an Issue in our [issue tracker](https://github.com/Relewise/relewise-integrations-uniform-canvas/issues).
 
 ## License
 
-Relewise Uniform Enhancer is licensed under the [MIT license](./LICENSE)
+Relewise Uniform Canvas is licensed under the [MIT license](./LICENSE)
