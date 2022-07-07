@@ -16,12 +16,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-          always-auth: true
-      - run: npm cache clean --force
-      - run: npm set //registry.npmjs.org/:_authToken $NODE_AUTH_TOKEN
-      - run: npm ci
+      - run: npm init --scope=@relewise
+      - run: npm i
       - run: npm run build
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          token: ${{ secrets.NPM_TOKEN }}
