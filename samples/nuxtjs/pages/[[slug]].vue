@@ -8,8 +8,11 @@ import {
   type ComponentInstance,
 } from "@uniformdev/canvas";
 import { createRelewiseEnhancer, RELEWISE_CANVAS_PARAMETER_TYPES } from '@relewise/uniform-canvas';
+import { Tracker, UserFactory } from "@relewise/client";
 
 const { $useComposition, $uniformCanvasClient, $preview, $config } = useNuxtApp();
+
+const tracker = new Tracker($config.public.relewise.datasetId, $config.public.relewise.apiKey)
 
 const enhancer = createRelewiseEnhancer({
   apiKey: $config.public.relewise.apiKey,
@@ -18,7 +21,6 @@ const enhancer = createRelewiseEnhancer({
   language: 'en-US'
 });
 
-console.log($uniformCanvasClient)
 async function doEnhance(composition: ComponentInstance) {
    const enhancedComposition = { ...composition };
 
@@ -42,6 +44,8 @@ const slug = `/${slugWithoutSlash}`;
 
 
 const { data } = await $useComposition({ slug });
+
+tracker.trackContentView({ contentId: `uniform_${data.value.composition._name}`, user: UserFactory.anonymous() })
 
 const composition = await doEnhance(data.value.composition);
 
