@@ -19,13 +19,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build --clean && tsc"
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
   },
   "author": "Relewise",
   "license": "MIT",
   "dependencies": {
-    "@uniformdev/canvas": "^16.0.0",
-    "axios": "^0.27.2"
+    "@relewise/client": "^1.4.1",
+    "@uniformdev/canvas": "^16.0.0"
   },
   "devDependencies": {
     "@testdeck/mocha": "^0.2.0",

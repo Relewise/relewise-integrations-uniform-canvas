@@ -2,6 +2,7 @@
 import {
   CANVAS_DRAFT_STATE,
   CANVAS_PUBLISHED_STATE,
+  compose,
   CompositionGetListResponse,
   enhance,
   EnhancerBuilder,
@@ -18,7 +19,9 @@ const enhancer = createRelewiseEnhancer({
   apiKey: $config.public.relewise.apiKey,
   datasetId: $config.public.relewise.datasetId,
   dataKeys: { products: ['ImageUrl', 'ShortDescription'], contents: ['url'] },
-  language: 'en-US'
+  language: 'en-US',
+  currency: 'USD',
+  userFactory: getUser
 });
 
 async function doEnhance(composition: ComponentInstance) {
@@ -27,7 +30,7 @@ async function doEnhance(composition: ComponentInstance) {
    try {
       await enhance({
         composition: enhancedComposition,
-        enhancers: new EnhancerBuilder().parameterType(RELEWISE_CANVAS_PARAMETER_TYPES, enhancer),
+        enhancers: new EnhancerBuilder().parameterType(RELEWISE_CANVAS_PARAMETER_TYPES, compose(enhancer)),
         context: { preview: $preview }
       });
     }
@@ -42,10 +45,9 @@ const { slug: slugWithoutSlash } = useRoute().params;
 
 const slug = `/${slugWithoutSlash}`;
 
-
 const { data } = await $useComposition({ slug });
 
-tracker.trackContentView({ contentId: `uniform_${data.value.composition._name}`, user: UserFactory.anonymous() })
+tracker.trackContentView({ contentId: `uniform_${data.value.composition._name}`, user: getUser() })
 
 const composition = await doEnhance(data.value.composition);
 
@@ -64,6 +66,10 @@ const navLinks = compositions
       url: c.composition._slug,
     };
   });
+
+function getUser() {
+  return UserFactory.byAuthenticatedId('cef8f0e0-4ae6-11ed-b878-0242ac120002'); //.byAuthenticatedId(crypto.randomUUID())
+}
 </script>
 
 <template>
