@@ -1,3 +1,5 @@
+import { RecommendationRequestBuilder } from '@relewise/client';
+
 export interface RelewiseCompositionSettings {
   type: string;
   filters: {
@@ -19,3 +21,8 @@ export interface RelewiseComposition {
 }
 
 export type EnhancedRelewiseComposition = RelewiseComposition & { data: { recommendations: any[] }}
+
+export interface RecommendationRequestInterceptorContext {
+  builder: RecommendationRequestBuilder;
+  recommendationType: 'PopularProducts' | 'PersonalProducts' | 'PopularContents' | 'PersonalContents';
+}

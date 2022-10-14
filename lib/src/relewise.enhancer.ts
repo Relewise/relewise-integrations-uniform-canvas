@@ -1,6 +1,6 @@
 import { getProductRecommendations, getContentRecommendations } from "./relewise.api";
-import { RelewiseCompositionSettings } from "./relewise.types";
-import { RecommendationRequestBuilder, User } from "@relewise/client";
+import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from "./relewise.types";
+import { User } from "@relewise/client";
 import { ComponentParameter, ComponentParameterEnhancer, ComponentParameterEnhancerOptions, EnhancerContext } from "@uniformdev/canvas";
 
 interface RelewiseEnhancerConfig {
@@ -13,7 +13,7 @@ interface RelewiseEnhancerConfig {
   language: string;
   currency: string;
   userFactory: () => User;
-  useRecommendationRequestInterceptor?: (builder: RecommendationRequestBuilder) => void;
+  useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
 }
 
 export interface EditorValue {

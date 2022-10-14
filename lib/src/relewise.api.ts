@@ -1,5 +1,5 @@
 import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, RecommendationRequestBuilder, Recommender, Settings, User } from '@relewise/client';
-import { RelewiseCompositionSettings } from './relewise.types';
+import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from './relewise.types';
 
 export const getProductRecommendations = async function ({
   apiKey,
@@ -20,7 +20,7 @@ export const getProductRecommendations = async function ({
   currency: string;
   uniformSlugName: string;
   userFactory: () => User;
-  useRecommendationRequestInterceptor?: (builder: RecommendationRequestBuilder) => void;
+  useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
 }) {
   const defaultSettings: Settings = {
     currency: currency,
@@ -40,7 +40,7 @@ export const getProductRecommendations = async function ({
     
       baseProductSettings(builder, settings, productDataKeys);
 
-    if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor(builder);
+    if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PopularProducts'});
 
     const request = builder.build();
 
@@ -49,7 +49,7 @@ export const getProductRecommendations = async function ({
     const builder = new PersonalProductRecommendationBuilder(defaultSettings);
     baseProductSettings(builder, settings, productDataKeys);
 
-    if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor(builder);
+    if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PersonalProducts'});
 
     const request = builder.build();
 
@@ -76,7 +76,7 @@ export const getContentRecommendations = async function ({
   currency: string;
   uniformSlugName: string;
   userFactory: () => User;
-  useRecommendationRequestInterceptor?: (builder: RecommendationRequestBuilder) => void;
+  useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
 }) {
 
   const defaultSettings: Settings = {
@@ -99,7 +99,7 @@ export const getContentRecommendations = async function ({
         DataKeys: contentDataKeys,
       });
       
-      if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor(builder);
+      if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PopularContents'});
 
       const request = builder.build();
 
@@ -114,7 +114,7 @@ export const getContentRecommendations = async function ({
         DataKeys: contentDataKeys,
       });
       
-      if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor(builder);
+      if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PersonalContents'});
 
       const request = builder.build();
     return (await recommender.recommendPersonalContents(request))?.recommendations ?? [];
