@@ -1,4 +1,4 @@
-import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, RecommendationRequestBuilder, Recommender, Settings, User } from '@relewise/client';
+import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, RecommendationRequestBuilder, Recommender, SelectedContentPropertiesSettings, SelectedProductPropertiesSettings, Settings, User } from '@relewise/client';
 import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from './relewise.types';
 
 export const getProductRecommendations = async function ({
@@ -95,9 +95,9 @@ export const getContentRecommendations = async function ({
       .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
       .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
       .setSelectedContentProperties({
-        DisplayName: true,
-        DataKeys: contentDataKeys,
-      });
+        displayName: true,
+        dataKeys: contentDataKeys,
+      } as SelectedContentPropertiesSettings);
       
       if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PopularContents'});
 
@@ -110,9 +110,9 @@ export const getContentRecommendations = async function ({
       .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
       .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
       .setSelectedContentProperties({
-        DisplayName: true,
-        DataKeys: contentDataKeys,
-      });
+        displayName: true,
+        dataKeys: contentDataKeys,
+      } as SelectedContentPropertiesSettings);
       
       if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PersonalContents'});
 
@@ -128,11 +128,11 @@ function baseProductSettings(builder: ProductSettingsRecommendationBuilder, sett
     .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
     .recommendVariant(settings.settings.recommendVariant)
     .setSelectedProductProperties({
-      DisplayName: true,
-      Pricing: true,
-      Brand: true,
-      DataKeys: productDataKeys,
-    })
+      displayName: true,
+      pricing: true,
+      brand: true,
+      dataKeys: productDataKeys,
+    } as SelectedProductPropertiesSettings)
     .filters(f => {
       if (settings.filters.brand && settings.filters.brand !== '') {
         f.addBrandIdFilter([settings.filters.brand])

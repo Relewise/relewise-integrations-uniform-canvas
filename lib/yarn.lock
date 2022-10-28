@@ -238,10 +238,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@relewise/client@^1.4.1":
-  "integrity" "sha512-70bQ+iARUcHQeZygzgZyhkgj8DBGtEJHciFiwLNxEogU8WuZ4p9NvaqKiR+L68dCqOUEUGvI6ZmsRjSmP8kYlw=="
-  "resolved" "https://registry.npmjs.org/@relewise/client/-/client-1.4.1.tgz"
-  "version" "1.4.1"
+"@relewise/client@^1.4.2":
+  "integrity" "sha512-dGvnNOQhAEuUvYuip+RFmQRZ0Lnu/UdzHIYsCDNBJykecYQhjEPlYTE9H8IPzklpTQAwapd91q8H17QFfh49Bg=="
+  "resolved" "https://registry.npmjs.org/@relewise/client/-/client-1.4.2.tgz"
+  "version" "1.4.2"
   dependencies:
     "cross-fetch" "^3.1.5"
 
