@@ -1,7 +1,7 @@
 import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, RecommendationRequestBuilder, Recommender, SelectedContentPropertiesSettings, SelectedProductPropertiesSettings, Settings, User } from '@relewise/client';
 import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from './relewise.types';
 
-export const getProductRecommendations = async function ({
+export const getProductRecommendations = async ({
   apiKey,
   datasetId,
   settings,
@@ -57,7 +57,7 @@ export const getProductRecommendations = async function ({
   }
 };
 
-export const getContentRecommendations = async function ({
+export const getContentRecommendations = async ({
   apiKey,
   datasetId,
   settings,
