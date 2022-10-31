@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { RelewiseCompositionSettings } from './relewise.types';
+import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, Recommender, SelectedContentPropertiesSettings, SelectedProductPropertiesSettings, Settings, User } from '@relewise/client';
+import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from './relewise.types';
 
 export const getProductRecommendations = async ({
   apiKey,
@@ -7,74 +7,54 @@ export const getProductRecommendations = async ({
   settings,
   productDataKeys,
   language,
-  uniformSlugName
+  currency,
+  uniformSlugName,
+  userFactory,
+  useRecommendationRequestInterceptor
 }: {
   apiKey: string;
   datasetId: string;
   settings: RelewiseCompositionSettings;
   productDataKeys: string[];
   language: string;
+  currency: string;
   uniformSlugName: string;
+  userFactory: () => User;
+  useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
 }) => {
-  const filters: any[] = [];
+  const defaultSettings: Settings = {
+    currency: currency,
+    displayedAtLocation: 'Uniform: ' + uniformSlugName,
+    language: language,
+    user: userFactory(),
+  };
 
-  if (settings.filters.brand && settings.filters.brand !== '') {
-    filters.push({
-      $type: 'Relewise.Client.Requests.Filters.BrandIdFilter, Relewise.Client',
-      BrandIds: [settings.filters.brand],
-      TypeName: 'BrandIdFilter',
-    });
-  }
+  const recommender = new Recommender(datasetId, apiKey);
 
   const isPopularProductsRequest = settings.type === "PopularProductsRequest";
 
-  const body = {
-    ...(isPopularProductsRequest && {
-      BasedOn: 'MostPurchased',
-      SinceMinutesAgo: settings.settings.sinceDaysAgo * 24 * 60
-    }),
-    Settings: {
-      NumberOfRecommendations: settings.settings.numberOfRecommendations,
-      AllowFillIfNecessaryToReachNumberOfRecommendations: settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations,
-      AllowReplacingOfRecentlyShownRecommendations: settings.settings.allowReplacingOfRecentlyShownRecommendations,
-      RecommendVariant: settings.settings.recommendVariant,
-      SelectedProductProperties: {
-        DisplayName: true,
-        Pricing: true,
-        Brand: true,
-        DataKeys: productDataKeys,
-      },
-    },
-    Language: {
-      Value: language,
-    },
-    User: {
-      Classifications: {},
-      Identifiers: {},
-      Data: {},
-    },
-    RelevanceModifiers: {},
-    Filters: {
-      Items: filters,
-    },
-    DisplayedAtLocationType: 'Uniform: '+ uniformSlugName,
-  };
+  if (isPopularProductsRequest) {
+    const builder = new PopularProductsBuilder(defaultSettings)
+      .basedOn('MostPurchased')
+      .sinceMinutesAgo(settings.settings.sinceDaysAgo * 24 * 60);
+    
+      baseProductSettings(builder, settings, productDataKeys);
 
-  const url = `https://api.relewise.com/${datasetId}/v1/${settings.type}`;
-  const apiKeyHeader = `APIKey ${apiKey}`;
+    if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PopularProducts'});
 
-  return (
-    (
-      await axios.post(url, body, {
-        withCredentials: false,
-        method: 'POST',
-        headers: {
-          Authorization: apiKeyHeader,
-          'Content-Type': 'application/json',
-        },
-      })
-    )?.data?.recommendations ?? []
-  );
+    const request = builder.build();
+
+    return (await recommender.recommendPopularProducts(request))?.recommendations ?? [];
+  } else {
+    const builder = new PersonalProductRecommendationBuilder(defaultSettings);
+    baseProductSettings(builder, settings, productDataKeys);
+
+    if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PersonalProducts'});
+
+    const request = builder.build();
+
+    return (await recommender.recommendPersonalProducts(request))?.recommendations ?? [];
+  }
 };
 
 export const getContentRecommendations = async ({
@@ -83,58 +63,79 @@ export const getContentRecommendations = async ({
   settings,
   contentDataKeys,
   language,
+  currency,
   uniformSlugName,
+  userFactory,
+  useRecommendationRequestInterceptor
 }: {
   apiKey: string;
   datasetId: string;
   settings: RelewiseCompositionSettings;
   contentDataKeys: string[];
   language: string;
+  currency: string;
   uniformSlugName: string;
+  userFactory: () => User;
+  useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
 }) => {
-  const filters: any[] = [];
 
-  const body = {
-    BasedOn: settings.settings.basedOn,
-    SinceMinutesAgo: settings.settings.sinceDaysAgo * 24 * 60,
-    Settings: {
-      NumberOfRecommendations: settings.settings.numberOfRecommendations,
-      AllowFillIfNecessaryToReachNumberOfRecommendations: settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations,
-      AllowReplacingOfRecentlyShownRecommendations: settings.settings.allowReplacingOfRecentlyShownRecommendations,
-      RecommendVariant: settings.settings.recommendVariant,
-      SelectedContentProperties: {
-        DisplayName: true,
-        DataKeys: contentDataKeys,
-      },
-    },
-    Language: {
-      Value: 'en-us',
-    },
-    User: {
-      Classifications: {},
-      Identifiers: {},
-      Data: {},
-    },
-    RelevanceModifiers: {},
-    Filters: {
-      Items: filters,
-    },
-    DisplayedAtLocationType: 'Uniform: ' + uniformSlugName,
+  const defaultSettings: Settings = {
+    currency: currency,
+    displayedAtLocation: 'Uniform: ' + uniformSlugName,
+    language: language,
+    user: userFactory(),
   };
 
-   const url = `https://api.relewise.com/${datasetId}/v1/${settings.type}`;
-   const apiKeyHeader = `APIKey ${apiKey}`;
+  const recommender = new Recommender(datasetId, apiKey);
 
-  return (
-    (
-      await axios.post(url, body, {
-        withCredentials: false,
-        method: 'POST',
-        headers: {
-          Authorization: apiKeyHeader,
-          'Content-Type': 'application/json',
-        },
-      })
-    )?.data?.recommendations ?? []
-  );
+  const isPopularContentsRequest = settings.type === "PopularContentsRequest";
+  if (isPopularContentsRequest) {
+    const builder = new PopularContentsBuilder(defaultSettings)
+      .setNumberOfRecommendations(settings.settings.numberOfRecommendations)
+      .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
+      .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
+      .setSelectedContentProperties({
+        displayName: true,
+        dataKeys: contentDataKeys,
+      } as SelectedContentPropertiesSettings);
+      
+      if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PopularContents'});
+
+      const request = builder.build();
+
+    return (await recommender.recommendPopularContents(request))?.recommendations ?? [];
+  } else {
+    const builder = new PersonalContentRecommendationBuilder(defaultSettings)
+      .setNumberOfRecommendations(settings.settings.numberOfRecommendations)
+      .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
+      .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
+      .setSelectedContentProperties({
+        displayName: true,
+        dataKeys: contentDataKeys,
+      } as SelectedContentPropertiesSettings);
+      
+      if (useRecommendationRequestInterceptor) useRecommendationRequestInterceptor({ builder, recommendationType: 'PersonalContents'});
+
+      const request = builder.build();
+    return (await recommender.recommendPersonalContents(request))?.recommendations ?? [];
+  }
 };
+
+function baseProductSettings(builder: ProductSettingsRecommendationBuilder, settings: RelewiseCompositionSettings, productDataKeys: string[]) {
+  builder
+    .setNumberOfRecommendations(settings.settings.numberOfRecommendations)
+    .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
+    .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
+    .recommendVariant(settings.settings.recommendVariant)
+    .setSelectedProductProperties({
+      displayName: true,
+      pricing: true,
+      brand: true,
+      dataKeys: productDataKeys,
+    } as SelectedProductPropertiesSettings)
+    .filters(f => {
+      if (settings.filters.brand && settings.filters.brand !== '') {
+        f.addBrandIdFilter([settings.filters.brand])
+      }
+    })
+}

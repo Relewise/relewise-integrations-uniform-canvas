@@ -1,8 +1,9 @@
 import { getProductRecommendations, getContentRecommendations } from "./relewise.api";
-import { RelewiseCompositionSettings } from "./relewise.types";
-import { ComponentParameter, ComponentParameterEnhancer } from "@uniformdev/canvas";
+import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from "./relewise.types";
+import { User } from "@relewise/client";
+import { ComponentParameter, ComponentParameterEnhancer, ComponentParameterEnhancerOptions, EnhancerContext } from "@uniformdev/canvas";
 
-interface RelewiseEnhancerConfig {
+export interface RelewiseEnhancerConfig {
   apiKey: string;
   datasetId: string;
   dataKeys?: {
@@ -10,6 +11,9 @@ interface RelewiseEnhancerConfig {
     contents?: string[];
   }
   language: string;
+  currency: string;
+  userFactory: () => User;
+  useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
 }
 
 export interface EditorValue {
@@ -36,13 +40,16 @@ export const createRelewiseEnhancer = ({
   apiKey,
   datasetId,
   dataKeys,
-  language
+  language,
+  currency,
+  userFactory,
+  useRecommendationRequestInterceptor
 }: RelewiseEnhancerConfig): ComponentParameterEnhancer => {
   return {
-    enhanceOne: async function RelewiseEnhancer({ parameter, parameterName, component, context }: any) {
+    enhanceOne: async function RelewiseEnhancer({ parameter, parameterName, component, context }: ComponentParameterEnhancerOptions<any, EnhancerContext>) {
       const { value: settings }: { value: RelewiseCompositionSettings } = parameter;
-      const uniformSlugName: string = component._slug;
-      
+      const uniformSlugName = parameter.type;
+
       if (parameterIsProductRecommendationEntry(parameter)) {
 
         const productDataKeys: string[] = (dataKeys?.products ?? []);
@@ -52,7 +59,10 @@ export const createRelewiseEnhancer = ({
           settings,
           productDataKeys,
           language,
+          currency,
           uniformSlugName,
+          userFactory,
+          useRecommendationRequestInterceptor
         });
 
         return recommendations;
@@ -67,7 +77,10 @@ export const createRelewiseEnhancer = ({
           settings,
           contentDataKeys,
           language,
-          uniformSlugName
+          currency,
+          uniformSlugName,
+          userFactory,
+          useRecommendationRequestInterceptor
         });
 
         return recommendations;

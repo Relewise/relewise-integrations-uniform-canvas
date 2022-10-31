@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 const props = defineProps({
-  relewiseProductRecommendation: Object
+  relewiseProductRecommendation: Object,
+  headline: String
 })
 
-const { relewiseProductRecommendation } = toRefs(props);
+const { relewiseProductRecommendation, headline } = toRefs(props);
 
 </script>
 <template>
   <div class="container">
-    <h1>Popular products</h1>
+    <h1>{{headline}}</h1>
 
     <div v-for="product in relewiseProductRecommendation" style="padding-bottom: 15px">
       <strong>{{product.productId}} - {{product.displayName}}</strong>
