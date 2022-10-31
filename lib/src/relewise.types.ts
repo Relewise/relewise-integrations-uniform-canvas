@@ -20,7 +20,7 @@ export interface RelewiseComposition {
   value: RelewiseCompositionSettings;
 }
 
-export type EnhancedRelewiseComposition = RelewiseComposition & { data: { recommendations: any[] }}
+export type EnhancedRelewiseComposition = RelewiseComposition & { data: { recommendations: any[] } }
 
 export interface RecommendationRequestInterceptorContext {
   builder: RecommendationRequestBuilder;

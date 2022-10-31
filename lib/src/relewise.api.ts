@@ -1,4 +1,4 @@
-import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, RecommendationRequestBuilder, Recommender, SelectedContentPropertiesSettings, SelectedProductPropertiesSettings, Settings, User } from '@relewise/client';
+import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuilder, PopularContentsBuilder, PopularProductsBuilder, ProductSettingsRecommendationBuilder, Recommender, SelectedContentPropertiesSettings, SelectedProductPropertiesSettings, Settings, User } from '@relewise/client';
 import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from './relewise.types';
 
 export const getProductRecommendations = async ({
@@ -21,7 +21,7 @@ export const getProductRecommendations = async ({
   uniformSlugName: string;
   userFactory: () => User;
   useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
-}) {
+}) => {
   const defaultSettings: Settings = {
     currency: currency,
     displayedAtLocation: 'Uniform: ' + uniformSlugName,
@@ -77,7 +77,7 @@ export const getContentRecommendations = async ({
   uniformSlugName: string;
   userFactory: () => User;
   useRecommendationRequestInterceptor?: (context: RecommendationRequestInterceptorContext) => void;
-}) {
+}) => {
 
   const defaultSettings: Settings = {
     currency: currency,

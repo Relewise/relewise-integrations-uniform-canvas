@@ -1,6 +1,6 @@
 {
   "name": "@relewise/uniform-canvas",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0",
   "description": "Relewise data enhancers for Uniform Canvas",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build --clean && tsc",
+    "build": "rollup -c",
     "dev": "rollup -c -w"
   },
   "author": "Relewise",
@@ -29,6 +29,10 @@
     "@uniformdev/canvas": "^16.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
     "@testdeck/mocha": "^0.2.0",
     "@types/js-cookie": "^3.0.2",
     "chai": "^4.3.6",
@@ -36,6 +40,7 @@
     "nyc": "^15.1.0",
     "pusher-js": "^7.0.6",
     "rollup": "^2.72.1",
+    "tslib": "^2.4.0",
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
@@ -46,5 +51,7 @@
   "bugs": {
     "url": "https://github.com/Relewise/relewise-integrations-uniform-enhancer/issues"
   },
-  "homepage": "https://github.com/Relewise/relewise-integrations-uniform-enhancer#readme"
+  "homepage": "https://github.com/Relewise/relewise-integrations-uniform-enhancer#readme",
+  "module": "dist/esm/relewise-client.js",
+  "browser": "dist/browser/relewise-client.js"
 }

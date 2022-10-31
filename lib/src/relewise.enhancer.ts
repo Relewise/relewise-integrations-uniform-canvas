@@ -3,7 +3,7 @@ import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } 
 import { User } from "@relewise/client";
 import { ComponentParameter, ComponentParameterEnhancer, ComponentParameterEnhancerOptions, EnhancerContext } from "@uniformdev/canvas";
 
-interface RelewiseEnhancerConfig {
+export interface RelewiseEnhancerConfig {
   apiKey: string;
   datasetId: string;
   dataKeys?: {

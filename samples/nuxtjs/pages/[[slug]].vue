@@ -68,7 +68,7 @@ const navLinks = compositions
   });
 
 function getUser() {
-  return UserFactory.byAuthenticatedId(crypto.randomUUID());
+  return UserFactory.byAuthenticatedId('bdf0123c-9228-420b-9e39-d5c95e2977b4'); // ID is generated using crypto.randomUUID() in the browser
 }
 </script>
 
