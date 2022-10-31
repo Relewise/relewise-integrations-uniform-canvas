@@ -10,7 +10,7 @@ npm install @relewise/uniform-canvas
 
 ## Usage examples
 
-```
+```ts
 function getUser() {
   return userHasAcceptedCookies 
     ? UserFactory.byAuthenticatedId(<CookieProvider.UniqueId>) 
