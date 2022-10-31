@@ -11,11 +11,19 @@ npm install @relewise/uniform-canvas
 ## Usage examples
 
 ```
+function getUser() {
+  return userHasAcceptedCookies 
+    ? UserFactory.byAuthenticatedId(<CookieProvider.UniqueId>) 
+    : UserFactory.anonymous();
+}
+
 const enhancer = createRelewiseEnhancer({
   apiKey: process.env.RELEWISE_API_KEY!,
   datasetId: process.env.RELEWISE_DATASET_ID!,
-  dataKeys: { products: ['Images', 'SubTitle'], contents: ['url'] },
-  language: 'da-DK'
+  dataKeys: { products: ['ImageUrl', 'ShortDescription'], contents: ['url'] },
+  language: 'en-US',
+  currency: 'USD',
+  userFactory: getUser
 });
   
 await enhance({
