@@ -68,7 +68,8 @@ const navLinks = compositions
   });
 
 function getUser() {
-  return UserFactory.byAuthenticatedId('bdf0123c-9228-420b-9e39-d5c95e2977b4'); // ID is generated using crypto.randomUUID() in the browser
+  // You can read about how to select the correct user in our documentation here: https://docs.relewise.com/docs/examples/ts/tracking/client-side-tracking.html#userfactory
+  return UserFactory.anonymous();
 }
 </script>
 
