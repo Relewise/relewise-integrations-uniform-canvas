@@ -2,8 +2,7 @@ import { PersonalContentRecommendationBuilder, PersonalProductRecommendationBuil
 import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from './relewise.types';
 
 export const getProductRecommendations = async ({
-  apiKey,
-  datasetId,
+  recommender,
   settings,
   productDataKeys,
   language,
@@ -12,8 +11,7 @@ export const getProductRecommendations = async ({
   userFactory,
   useRecommendationRequestInterceptor
 }: {
-  apiKey: string;
-  datasetId: string;
+  recommender: Recommender;
   settings: RelewiseCompositionSettings;
   productDataKeys: string[];
   language: string;
@@ -28,8 +26,6 @@ export const getProductRecommendations = async ({
     language: language,
     user: userFactory(),
   };
-
-  const recommender = new Recommender(datasetId, apiKey);
 
   const isPopularProductsRequest = settings.type === "PopularProductsRequest";
 
@@ -58,8 +54,7 @@ export const getProductRecommendations = async ({
 };
 
 export const getContentRecommendations = async ({
-  apiKey,
-  datasetId,
+  recommender,
   settings,
   contentDataKeys,
   language,
@@ -68,8 +63,7 @@ export const getContentRecommendations = async ({
   userFactory,
   useRecommendationRequestInterceptor
 }: {
-  apiKey: string;
-  datasetId: string;
+  recommender: Recommender;
   settings: RelewiseCompositionSettings;
   contentDataKeys: string[];
   language: string;
@@ -85,8 +79,6 @@ export const getContentRecommendations = async ({
     language: language,
     user: userFactory(),
   };
-
-  const recommender = new Recommender(datasetId, apiKey);
 
   const isPopularContentsRequest = settings.type === "PopularContentsRequest";
   if (isPopularContentsRequest) {

@@ -9,15 +9,15 @@ import {
   type ComponentInstance,
 } from "@uniformdev/canvas";
 import { createRelewiseEnhancer, RELEWISE_CANVAS_PARAMETER_TYPES } from '@relewise/uniform-canvas';
-import { Tracker, UserFactory } from "@relewise/client";
+import { Tracker, UserFactory, Recommender } from "@relewise/client";
 
 const { $useComposition, $uniformCanvasClient, $preview, $config } = useNuxtApp();
 
 const tracker = new Tracker($config.public.relewise.datasetId, $config.public.relewise.apiKey)
+const recommender = new Recommender($config.public.relewise.datasetId, $config.public.relewise.apiKey)
 
 const enhancer = createRelewiseEnhancer({
-  apiKey: $config.public.relewise.apiKey,
-  datasetId: $config.public.relewise.datasetId,
+  recommender,
   dataKeys: { products: ['ImageUrl', 'ShortDescription'], contents: ['url'] },
   language: 'en-US',
   currency: 'USD',

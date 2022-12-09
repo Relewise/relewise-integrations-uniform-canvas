@@ -1,11 +1,10 @@
 import { getProductRecommendations, getContentRecommendations } from "./relewise.api";
 import { RecommendationRequestInterceptorContext, RelewiseCompositionSettings } from "./relewise.types";
-import { User } from "@relewise/client";
+import { Recommender, User } from "@relewise/client";
 import { ComponentParameter, ComponentParameterEnhancer, ComponentParameterEnhancerOptions, EnhancerContext } from "@uniformdev/canvas";
 
 export interface RelewiseEnhancerConfig {
-  apiKey: string;
-  datasetId: string;
+  recommender: Recommender,
   dataKeys?: {
     products?: string[];
     contents?: string[];
@@ -37,8 +36,7 @@ function parameterIsContentRecommendationEntry(
 }
 
 export const createRelewiseEnhancer = ({
-  apiKey,
-  datasetId,
+  recommender,
   dataKeys,
   language,
   currency,
@@ -54,8 +52,7 @@ export const createRelewiseEnhancer = ({
 
         const productDataKeys: string[] = (dataKeys?.products ?? []);
         const recommendations = await getProductRecommendations({
-          apiKey,
-          datasetId,
+          recommender,
           settings,
           productDataKeys,
           language,
@@ -72,8 +69,7 @@ export const createRelewiseEnhancer = ({
 
         const contentDataKeys: string[] = (dataKeys?.contents ?? []);
         const recommendations = await getContentRecommendations({
-          apiKey,
-          datasetId,
+          recommender,
           settings,
           contentDataKeys,
           language,
