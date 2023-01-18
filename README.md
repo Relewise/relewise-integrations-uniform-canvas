@@ -17,9 +17,9 @@ function getUser() {
     : UserFactory.anonymous();
 }
 
+const recommender = new Recommender(`RELEWISE_DATASET_ID`, `RELEWISE_API_KEY`)
 const enhancer = createRelewiseEnhancer({
-  apiKey: process.env.RELEWISE_API_KEY!,
-  datasetId: process.env.RELEWISE_DATASET_ID!,
+  recommender,
   dataKeys: { products: ['ImageUrl', 'ShortDescription'], contents: ['url'] },
   language: 'en-US',
   currency: 'USD',
