@@ -10,8 +10,6 @@ export interface RelewiseCompositionSettings {
     sinceDaysAgo: number;
     recommendVariant: boolean;
     numberOfRecommendations: number;
-    allowReplacingOfRecentlyShownRecommendations: boolean;
-    allowFillIfNecessaryToReachNumberOfRecommendations: boolean;
   };
 }
 

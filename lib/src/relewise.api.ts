@@ -84,8 +84,6 @@ export const getContentRecommendations = async ({
   if (isPopularContentsRequest) {
     const builder = new PopularContentsBuilder(defaultSettings)
       .setNumberOfRecommendations(settings.settings.numberOfRecommendations)
-      .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
-      .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
       .setSelectedContentProperties({
         displayName: true,
         dataKeys: contentDataKeys,
@@ -99,8 +97,6 @@ export const getContentRecommendations = async ({
   } else {
     const builder = new PersonalContentRecommendationBuilder(defaultSettings)
       .setNumberOfRecommendations(settings.settings.numberOfRecommendations)
-      .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
-      .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
       .setSelectedContentProperties({
         displayName: true,
         dataKeys: contentDataKeys,
@@ -116,8 +112,6 @@ export const getContentRecommendations = async ({
 function baseProductSettings(builder: ProductSettingsRecommendationBuilder, settings: RelewiseCompositionSettings, productDataKeys: string[]) {
   builder
     .setNumberOfRecommendations(settings.settings.numberOfRecommendations)
-    .allowFillIfNecessaryToReachNumberOfRecommendations(settings.settings.allowFillIfNecessaryToReachNumberOfRecommendations)
-    .allowReplacingOfRecentlyShownRecommendations(settings.settings.allowReplacingOfRecentlyShownRecommendations)
     .recommendVariant(settings.settings.recommendVariant)
     .setSelectedProductProperties({
       displayName: true,
